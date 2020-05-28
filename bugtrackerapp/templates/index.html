@@ -1,0 +1,59 @@
+<h1>Bug Tracker</h1>
+    <h2>
+        {% if not user.is_authenticated %}
+                <a href="/login/">Login</a>
+            {% elif user.is_authenticated %}
+                <a href="/logout/">Logout</a>
+            {% endif %}
+    </h2>
+
+
+
+{% if user.is_authenticated %}
+
+
+    <a href="addticket/">Add a Ticket!</a>
+
+
+<br>
+<br>
+<h2>New Tickets:</h2>
+    {% for ticket in new_tickets %}
+
+        <h3><a href="/ticket/{{ticket.filing_user.id}}">{{ ticket.title }}</a></h3>
+            <p>{{ ticket.description }}</p>
+            <p>Status: {{ticket.ticket_status}}</p>
+            <p>Assigned to: <a href="/user/{{ticket.assigned_user.id}}">{{ ticket.assigned_user }}</a></p>
+            <p>Filed by: <a href="/user/{{ticket.filing_user.id}}">{{ ticket.filing_user }}</a></p>
+            <p><a href="/edit/{{ticket.id}}">Edit this ticket...</a></p>
+
+    {% endfor %}
+<h2>In Progress Tickets</h2>
+    {% for ticket in in_progress_tickets %}
+        <h3><a href="/ticket/{{ticket.id}}">{{ ticket.title }}</a></h3>
+        <p>{{ ticket.description }}</p>
+        <p>Status: In Progress</p>
+        <p>Assigned to: <a href="/user/{{ticket.assigned_user.id}}">{{ ticket.assigned_user }}</a></p>
+        <p>Filed by: <a href="/user/{{ticket.filing_user.id}}">{{ ticket.filing_user }}</a></p>
+        <p><a href="/edit/{{tickets.id}}">Edit this ticket...</a></p>
+    {% endfor %}
+<h2>Completed Tickets</h2>
+    {% for tickets in done_tickets %}
+        <h3><a href="/ticket/{{ticket.id}}">{{ ticket.title }}</a></h3>
+        <p>{{ ticket.description }}</p>
+        <p>Status: Completed</p>
+        <p>Assigned to: {{ ticket.assigned_user }}</p>
+        <p>Filed by: <a href="/user/{{ticket.filing_user.id}}">{{ ticket.filing_user }}</a></p>
+        <p>Completed by: <a href="/user/{{ticket.completed_user.id}}">{{ ticket.completed_user }}</a></p>
+        <p><a href="/edit/{{tickets.id}}">Edit this ticket...</a></p>
+    {% endfor %}
+<h2>Invalid Tickets</h2>
+    {% for ticket in invalid_tickets %}
+        <h3><a href="/ticket/{{ticket.id}}">{{ ticket.title }}</a></h3>
+        <p>{{ ticket.description }}</p>
+        <p>Status: {{ticket.ticket_status}}</p>
+        <p>Assigned to: {{ ticket.assigned_user }}</p>
+        <p>Filed by: <a href="/user/{{ticket.title.id}}">{{ ticket.assigned_user }}</a></p>
+        <p><a href="/edit/{{tickets.id}}">Edit this ticket...</a></p>
+    {% endfor %}
+{% endif %}

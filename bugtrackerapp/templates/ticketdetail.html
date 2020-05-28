@@ -1,0 +1,9 @@
+<h1>Ticket Detail:</h1>
+
+{% for ticket in tickets %}
+    <h2>{{ticket.title}}} by <a href='user/{{ticket.filing_user.id}}/'> {{ticket.filing_user}}</a></h2>
+    <br>
+    <br>
+    <p>{{ticket.description}}</p>
+    <p>Date: {{ticket.date}} </p>
+{% endfor %}
