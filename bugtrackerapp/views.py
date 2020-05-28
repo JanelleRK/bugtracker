@@ -18,7 +18,7 @@ def index(request):
 
 
 def login_view(request):
-    html="genericform.html"
+    html="loginform.html"
 
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -136,6 +136,7 @@ def mark_completed(request, id):
     ticket.save()
     return HttpResponseRedirect(reverse('ticket', args=(id,)))
 
+
 @login_required
 def mark_in_progress(request, id):
     ticket = Ticket.objects.get(id=id)
@@ -144,6 +145,7 @@ def mark_in_progress(request, id):
     ticket.assigned_user = None
     ticket.save()
     return HttpResponseRedirect(reverse('ticket', args=(id,)))
+
 
 @login_required
 def mark_invalid(request, id):

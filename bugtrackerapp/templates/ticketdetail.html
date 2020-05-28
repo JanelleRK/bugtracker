@@ -6,4 +6,9 @@
     <br>
     <p>{{ticket.description}}</p>
     <p>Date: {{ticket.date}} </p>
+
+    <a href='/in_progress/{ticket.id}}/'>In Progress</a>
+    <a href='/invalid/{ticket.id}}/'>Invalid</a>
+    <a href='/in progress/{ticket.id}}/'>Complete</a>
+    <a href="/edit/{{tickets.id}}">Edit</a>
 {% endfor %}
