@@ -1,7 +1,7 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from bugtrackerapp.models import Ticket, CustomUser
-from bugtrackerapp.forms import AddTicketForm, LoginForm, EditTicketForm
+from bugtrackerapp.forms import AddTicketForm, LoginForm, EditTicketForm, CustomUserForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -39,6 +39,29 @@ def login_view(request):
 
         return render(request, html, {'form': form})
 
+
+def signup_view(request):
+    if request.method == "POST":
+        form = CustomUserForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            new_user = CustomUser.objects.create_user(
+                username=data['username'],
+                password=data['password']
+            )
+            new_user.set_password(raw_password=data['password'])
+        new_user.save()
+        user=authenticate(request, username=['username'], password=['password'])
+        if user:
+            login(request, user)
+        return HttpResponseRedirect(reverse, 'homepage')
+
+    else:
+
+        form = CustomUserForm()
+
+        return render(request, 'genericform.html', {'form': form})
 
 @login_required
 def add_ticket(request):
@@ -87,31 +110,23 @@ def ticket_detail(request, id):
 @login_required
 def edit_ticket_view(request, id):
 
-    html = "genericform.html"
+    html = "addticket.html"
 
     ticket = Ticket.objects.get(id=id)
 
     if request.method == "POST":
-        form = EditTicketForm(request.POST, instance=ticket)
-        form.save()
+        form = EditTicketForm(request.POST)
+        if form.is_valid():
+            data=form.cleaned_data
+            ticket.title = data['title']
+            ticket.description = data['description']
+            ticket.save()
+        return HttpResponseRedirect(reverse('ticket', args=(id,)))
 
-        if ticket.Status == "Done":
-            ticket.completed_user = ticket.assigned_user
-            ticket.assigned_user = None
-            form.save()
-        elif ticket.ticket_status == "In_progress" and ticket.assigned_user is None:
-            ticket.assigned_user = ticket.filing_user
-        elif ticket.Status == "Invalid":
-            ticket.completed_user = None
-            ticket.assigned_user = None
-            form.save()
-        elif ticket.assigned_user is not None:
-            ticket.ticket_status = "In_progress"
-            form.save()
-
-        return HttpResponseRedirect(reverse('ticket'))
-
-    form = EditTicketForm(instance=ticket)
+    form = EditTicketForm(initial={
+        'title':ticket.title,
+        'description':ticket.description}
+    )
 
     return render(request, html, {'form': form})
 

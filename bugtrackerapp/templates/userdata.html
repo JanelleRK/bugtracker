@@ -11,9 +11,9 @@
             <p>Status: {{tickets.ticket_status}}</p>
         {% endif %}
         {% if tickets.assigned_user is not None%}
-            <p> Assigned User: <a href="/user/{{tickets.assigned_user.id}}/">{{ tickets.assigned_user }}</a></p>
+            <p>Assigned to: <a href="/user/{{tickets.assigned_user.id}}/">{{ tickets.assigned_user }}</a></p>
         {% else %}
-            <p> Assigned User: {{ tickets.assigned_user }}</p>
+            <p>Assigned to: {{ tickets.assigned_user }}</p>
         {% endif %}
         <p>Created by: <a href="/user/{{tickets.filing_user.id}}/">{{ tickets.filing_user }}</a>
         <p><a href="/edit/{{tickets.id}}">Edit this ticket...</a></p>
@@ -29,9 +29,9 @@
         {% elif tickets.ticket_status == ""%}
             <p>Status: {{tickets.ticket_status}}</p>
         {% endif %}
-        <p> Assigned User: <a href="/user/{{tickets.assigned_user.id}}/">{{ tickets.assigned_user }}</a></p>
+        <p>Assigned to: <a href="/user/{{tickets.assigned_user.id}}/">{{ tickets.assigned_user }}</a></p>
         <p>Created by: <a href="/user/{{tickets.filing_user.id}}/">{{ tickets.filing_user }}</a></p>
-        <p><a href="/edit/{{tickets.id}}">EDIT</a></p>
+        <p><a href="/edit/{{tickets.id}}">Edit this ticket...</a></p>
     {% endfor %}
 <br>
     <h1>Tickets Completed:</h1>
@@ -40,8 +40,10 @@
         <h2><a href="/ticket/{{tickets.id}}/">{{ tickets.title }}</a></h2>
         <p>{{ tickets.description }}</p>
         <p>Status: {{tickets.ticket_status}}</p>
-        <p> Assigned User: {{ tickets.assigned_user }}</p>
+        <p>Assigned to: {{ tickets.assigned_user }}</p>
         <p>Created by: <a href="/user/{{tickets.filing_user.id}}/">{{ tickets.filing_user }}</a></p>
         <p>Finished By: <a href="/user/{{tickets.completed_user.id}}/">{{ tickets.completed_user }}</a></p>
         <p><a href="/edit/{{tickets.ticket_id}}">Edit this ticket...</a></p>
     {% endfor %}
+<br>
+<a href="/">Take me back home</a>

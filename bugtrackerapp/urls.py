@@ -5,6 +5,7 @@ from bugtrackerapp import views
 urlpatterns = [
     path('', views.index, name='homepage'),
     path('login/', views.login_view, name='login'),
+    path('signup', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
     path('addticket/', views.add_ticket, name='addticket'),
     path('ticket/<int:id>/', views.ticket_detail, name='ticket'),
