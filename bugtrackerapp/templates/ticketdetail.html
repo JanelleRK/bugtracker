@@ -1,14 +1,18 @@
 <h1>Ticket Detail:</h1>
 
-{% for ticket in tickets %}
-    <h2>{{ticket.title}}} by <a href='user/{{ticket.filing_user.id}}/'> {{ticket.filing_user}}</a></h2>
+
+    <h2>{{ticket.title}} <br>Filed by <a href="/user/{{ticket.filing_user.id}}"> {{ticket.filing_user}}</a></h2>
     <br>
     <br>
     <p>{{ticket.description}}</p>
     <p>Date: {{ticket.date}} </p>
 
     <a href='/in_progress/{ticket.id}}/'>In Progress</a>
+<br>
     <a href='/invalid/{ticket.id}}/'>Invalid</a>
+<br>
     <a href='/in progress/{ticket.id}}/'>Complete</a>
+<br>
     <a href="/edit/{{tickets.id}}">Edit</a>
-{% endfor %}
+<br>
+

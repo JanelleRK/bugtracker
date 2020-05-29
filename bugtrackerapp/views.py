@@ -80,8 +80,8 @@ def login_view(request):
 
 @login_required
 def ticket_detail(request, id):
-    tickets = Ticket.objects.get(id=id)
-    return render(request, 'ticketdetail.html', {'tickets': tickets})
+    ticket = Ticket.objects.get(id=id)
+    return render(request, 'ticketdetail.html', {'ticket': ticket})
 
 
 @login_required
